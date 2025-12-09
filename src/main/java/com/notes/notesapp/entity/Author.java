@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "authors")
 @Getter
 @Setter
 @ToString
@@ -17,5 +18,10 @@ public class Author {
     private Long id;
 
     @Column(nullable = false, length = 60)
+    @NonNull
     private String name;
+
+    public Author(@NonNull String name){
+        this.name = name;
+    }
 }

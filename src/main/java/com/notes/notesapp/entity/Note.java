@@ -1,12 +1,14 @@
 package com.notes.notesapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "notes")
 @Getter
 @Setter
 @ToString(exclude = {"author"})
@@ -20,9 +22,10 @@ public class Note {
     private Long id;
 
     @Column(nullable = false, length = 256)
+    @NotNull
     private String title;
 
-    @Column(nullable = true, length = 1500)
+    @Column(length = 1500)
     private String content;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -31,5 +34,12 @@ public class Note {
 
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
+    @NotNull
     private Author author;
+
+    public Note(String title, String content, Author author){
+        this.title = title;
+        this.content = content;
+        this.author = author;
+    }
 }
