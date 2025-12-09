@@ -1,14 +1,15 @@
 package com.notes.notesapp.service;
 
-import com.notes.notesapp.dto.author.AuthorRequest;
 import com.notes.notesapp.dto.author.AuthorResponse;
 import com.notes.notesapp.entity.Author;
 import com.notes.notesapp.exception.AuthorNotFoundException;
 import com.notes.notesapp.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+import java.util.List;
+
+@Service
 @RequiredArgsConstructor
 public class AuthorService {
     private final AuthorRepository authorRepository;
@@ -18,4 +19,12 @@ public class AuthorService {
                 .orElseThrow(() -> new AuthorNotFoundException(id));
         return AuthorResponse.fromEntity(author);
     }
+
+    public List<AuthorResponse> getAll() {
+        return authorRepository.findAll()
+                .stream()
+                .map(AuthorResponse::fromEntity)
+                .toList();
+    }
+
 }

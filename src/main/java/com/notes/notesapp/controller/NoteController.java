@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/notes")
 @RequiredArgsConstructor
@@ -17,5 +19,10 @@ public class NoteController {
     @GetMapping("/{id}")
     public NoteResponse getByid(@PathVariable Long id) {
         return noteService.getById(id);
+    }
+
+    @GetMapping
+    public List<NoteResponse> getAll() {
+        return noteService.getAll();
     }
 }

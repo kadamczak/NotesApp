@@ -22,7 +22,7 @@ public class Author {
 
     @Column(nullable = false, length = NAME_MAX_LENGTH)
     @NotBlank
-    private String name;
+    private String name; // Assumed: name does not have to be unique
 
     public Author(@NonNull String name){
         this.name = name;

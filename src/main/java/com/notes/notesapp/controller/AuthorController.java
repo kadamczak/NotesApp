@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/authors")
 @RequiredArgsConstructor
@@ -17,5 +19,10 @@ public class AuthorController {
     @GetMapping("/{id}")
     public AuthorResponse getByid(@PathVariable Long id) {
         return authorService.getById(id);
+    }
+
+    @GetMapping
+    public List<AuthorResponse> getAll() {
+        return authorService.getAll();
     }
 }

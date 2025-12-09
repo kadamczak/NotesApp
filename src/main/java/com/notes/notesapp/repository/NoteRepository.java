@@ -1,7 +1,7 @@
 package com.notes.notesapp.repository;
 
 import com.notes.notesapp.entity.Note;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface NoteRepository extends CrudRepository<Note, Long> {
+public interface NoteRepository extends JpaRepository<Note, Long> {
 }
