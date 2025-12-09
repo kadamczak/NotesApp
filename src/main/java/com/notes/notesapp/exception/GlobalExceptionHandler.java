@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(AuthorNotFoundException.class)
+    @ExceptionHandler({AuthorNotFoundException.class, NoteNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleAuthorNotFound(AuthorNotFoundException ex) {
+    public ErrorResponse handleNotFound(RuntimeException ex) {
         return new ErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND.value());
     }
 }
