@@ -1,5 +1,6 @@
 package com.notes.notesapp.service;
 
+import com.notes.notesapp.dto.author.AuthorRequest;
 import com.notes.notesapp.dto.author.AuthorResponse;
 import com.notes.notesapp.entity.Author;
 import com.notes.notesapp.exception.AuthorNotFoundException;
@@ -14,10 +15,12 @@ import java.util.List;
 public class AuthorService {
     private final AuthorRepository authorRepository;
 
-    public AuthorResponse getById(Long id) {
-        Author author = authorRepository.findById(id)
-                .orElseThrow(() -> new AuthorNotFoundException(id));
-        return AuthorResponse.fromEntity(author);
+    public AuthorResponse create(AuthorRequest request) {
+        Author author = request.toEntity();
+        author.setName(author.getName().trim());
+
+        Author savedAuthor = authorRepository.save(author);
+        return AuthorResponse.fromEntity(savedAuthor);
     }
 
     public List<AuthorResponse> getAll() {
@@ -27,4 +30,9 @@ public class AuthorService {
                 .toList();
     }
 
+    public AuthorResponse getById(Long id) {
+        Author author = authorRepository.findById(id)
+                .orElseThrow(() -> new AuthorNotFoundException(id));
+        return AuthorResponse.fromEntity(author);
+    }
 }

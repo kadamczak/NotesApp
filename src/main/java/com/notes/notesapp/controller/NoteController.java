@@ -16,13 +16,13 @@ import java.util.List;
 public class NoteController {
     private final NoteService noteService;
 
-    @GetMapping("/{id}")
-    public NoteResponse getByid(@PathVariable Long id) {
-        return noteService.getById(id);
-    }
-
     @GetMapping
     public List<NoteResponse> getAll() {
         return noteService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public NoteResponse getByid(@PathVariable Long id) {
+        return noteService.getById(id);
     }
 }

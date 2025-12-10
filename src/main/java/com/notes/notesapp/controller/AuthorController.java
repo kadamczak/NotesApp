@@ -1,13 +1,15 @@
 package com.notes.notesapp.controller;
 
+import com.notes.notesapp.dto.author.AuthorRequest;
 import com.notes.notesapp.dto.author.AuthorResponse;
 import com.notes.notesapp.service.AuthorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -16,13 +18,22 @@ import java.util.List;
 public class AuthorController {
     private final AuthorService authorService;
 
-    @GetMapping("/{id}")
-    public AuthorResponse getByid(@PathVariable Long id) {
-        return authorService.getById(id);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<AuthorResponse> create(@Valid @RequestBody AuthorRequest request) {
+        AuthorResponse author = authorService.create(request);
+        return ResponseEntity
+                .created(URI.create("/authors/" + author.getId()))
+                .body(author);
     }
 
     @GetMapping
     public List<AuthorResponse> getAll() {
         return authorService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public AuthorResponse getByid(@PathVariable Long id) {
+        return authorService.getById(id);
     }
 }

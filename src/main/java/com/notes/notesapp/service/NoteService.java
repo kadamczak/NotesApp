@@ -14,16 +14,16 @@ import java.util.List;
 public class NoteService {
     private final NoteRepository noteRepository;
 
-    public NoteResponse getById(Long id) {
-        Note note = noteRepository.findById(id)
-                .orElseThrow(() -> new NoteNotFoundException(id));
-        return NoteResponse.fromEntity(note);
-    }
-
     public List<NoteResponse> getAll() {
         return noteRepository.findAll()
                 .stream()
                 .map(NoteResponse::fromEntity)
                 .toList();
+    }
+
+    public NoteResponse getById(Long id) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new NoteNotFoundException(id));
+        return NoteResponse.fromEntity(note);
     }
 }
