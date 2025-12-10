@@ -16,6 +16,6 @@ public class AuthorRequest {
     private String name;
 
     public Author toEntity() {
-        return new Author(name);
+        return new Author(this.getName().trim());
     }
 }

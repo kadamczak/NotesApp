@@ -1,13 +1,15 @@
 package com.notes.notesapp.controller;
 
+import com.notes.notesapp.dto.note.NoteRequest;
 import com.notes.notesapp.dto.note.NoteResponse;
 import com.notes.notesapp.service.NoteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -15,6 +17,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NoteController {
     private final NoteService noteService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<NoteResponse> create(@Valid @RequestBody NoteRequest request) {
+        NoteResponse note = noteService.create(request);
+        return ResponseEntity
+                .created(URI.create("/notes/" + note.getId()))
+                .body(note);
+    }
 
     @GetMapping
     public List<NoteResponse> getAll() {

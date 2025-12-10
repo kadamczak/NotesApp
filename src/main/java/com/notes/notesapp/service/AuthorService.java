@@ -17,8 +17,6 @@ public class AuthorService {
 
     public AuthorResponse create(AuthorRequest request) {
         Author author = request.toEntity();
-        author.setName(author.getName().trim());
-
         Author savedAuthor = authorRepository.save(author);
         return AuthorResponse.fromEntity(savedAuthor);
     }

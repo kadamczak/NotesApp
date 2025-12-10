@@ -1,5 +1,6 @@
 package com.notes.notesapp.dto.note;
 
+import com.notes.notesapp.entity.Author;
 import com.notes.notesapp.entity.Note;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +20,19 @@ public class NoteRequest {
     @Size(max = Note.CONTENT_MAX_LENGTH, message = "Content can't be more than {max} characters.")
     private String content;
 
-    @NotNull
+    @NotNull(message = "Author ID is required")
     private Long authorId;
+
+    public Note toEntity(Author author) {
+        String trimmedContent = getContent() != null ? getContent().trim() : null;
+        if (trimmedContent != null && trimmedContent.isEmpty()) {
+            trimmedContent = null;
+        }
+
+        return new Note(
+                getTitle().trim(),
+                trimmedContent,
+                author
+        );
+    }
 }
