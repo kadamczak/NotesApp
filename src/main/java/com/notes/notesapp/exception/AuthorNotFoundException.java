@@ -2,6 +2,6 @@ package com.notes.notesapp.exception;
 
 public class AuthorNotFoundException extends RuntimeException {
     public AuthorNotFoundException(Long id) {
-        super("Author not found with id: " + id);
+        super("Author with id " + id + " not found");
     }
 }
