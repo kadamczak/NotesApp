@@ -36,4 +36,10 @@ public class NoteController {
     public NoteResponse getByid(@PathVariable Long id) {
         return noteService.getById(id);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        noteService.delete(id);
+    }
 }

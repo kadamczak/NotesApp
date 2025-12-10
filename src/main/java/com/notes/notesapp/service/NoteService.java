@@ -40,4 +40,10 @@ public class NoteService {
                 .orElseThrow(() -> new NoteNotFoundException(id));
         return NoteResponse.fromEntity(note);
     }
+
+    public void delete(Long id) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new NoteNotFoundException(id));
+        noteRepository.delete(note);
+    }
 }
